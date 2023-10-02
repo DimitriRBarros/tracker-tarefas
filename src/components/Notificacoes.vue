@@ -17,9 +17,9 @@
 
 <script lang="ts">
 
-import { useStore } from '@/store';
 import { computed, defineComponent } from 'vue';
 import { TipoNotificacao } from '@/interfaces/INotificacao'
+import { useStore } from '@/store/modulos/tarefas';
 
 
 export default defineComponent({

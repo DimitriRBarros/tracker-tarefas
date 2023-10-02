@@ -1,5 +1,5 @@
 import { TipoNotificacao } from "@/interfaces/INotificacao"
-import { store } from "@/store"
+import { store } from "@/store/modulos/tarefas"
 import { NOTIFICAR } from "@/store/tipo-mutacoes"
 
 type Notificador = {

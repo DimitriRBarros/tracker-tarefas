@@ -1,10 +1,8 @@
 <template>
     <section>
-        <strong class="display">
-            {{ tempoDecorrido }}
-        </strong>
+      <i class="far fa-clock"></i> {{tempoDecorrido}}
     </section>
-</template>
+  </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';

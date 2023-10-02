@@ -15,13 +15,15 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store"
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
-import { ALTERA_PROJETO, ADICIONA_PROJETO } from "@/store/tipo-mutacoes";
 import { TipoNotificacao } from "@/interfaces/INotificacao"
+import { ALTERAR_PROJETO } from "@/store/tipo-acoes"
 
 import useNotificador from "@/hooks/notificador"
+import { CADASTRAR_PROJETO } from "@/store/tipo-acoes";
+import { useRouter } from "vue-router";
+import { useStore } from "@/store/modulos/tarefas";
 
 export default defineComponent({
     name: "Fomulario-alura-tracker",
@@ -30,38 +32,43 @@ export default defineComponent({
             type: String
         }
     },
-    mounted() {
-        if (this.id) {
-            const projeto = this.store.state.projetos.find(proj => proj.id == this.id)
-            this.nomeDoProjeto = projeto?.name || ''
-        }
-    },
-    data() {
-        return {
-            nomeDoProjeto: "",
-        };
-    },
-    methods: {
-        salvar() {
-            if (this.id) {
-                this.store.commit(ALTERA_PROJETO, {
-                    id: this.id,
-                    name: this.nomeDoProjeto
-                })
-            } else {
-                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
-            }
-            this.nomeDoProjeto = "";
-            this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso')
-            this.$router.push('/projetos')
-        },
-    },
-    setup() {
+    setup(props) {
+
+        const router = useRouter()
+
         const store = useStore()
         const { notificar } = useNotificador()
+
+        const nomeDoProjeto = ref("")
+
+        if (props.id) {
+            const projeto = store.state.projeto.projetos.find(
+                proj => proj.id == props.id
+            );
+            nomeDoProjeto.value = projeto?.name || ''
+        }
+
+        const lidarComSucesso = () => {
+            nomeDoProjeto.value = "";
+            notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso')
+            router.push('/projetos')
+        }
+
+        const salvar = () => {
+            if (props.id) {
+                store.dispatch(ALTERAR_PROJETO, {
+                    id: props.id,
+                    name: nomeDoProjeto.value,
+                }).then(() => lidarComSucesso())
+            } else {
+                store.dispatch(CADASTRAR_PROJETO, nomeDoProjeto.value)
+                    .then(() => lidarComSucesso())
+            }
+        }
+
         return {
-            store,
-            notificar
+            nomeDoProjeto,
+            salvar
         }
     }
 });

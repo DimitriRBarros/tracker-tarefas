@@ -1,0 +1,41 @@
+{
+  "projetos": [],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "Configuração do ambiente 2.0",
+      "projeto": {
+        "id": 1,
+        "name": "Alura Tacker 3.0"
+      }
+    },
+    {
+      "duracaoEmSegundos": 1,
+      "descricao": "Refatoração do vuex 4",
+      "projeto": {
+        "id": 1,
+        "name": "Alura Tacker 3.0"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "Estudando padroẽs de projetos",
+      "projeto": {
+        "id": 2,
+        "name": "ByteBank 1.0.2"
+      },
+      "id": 3
+    },
+    {
+      "duracaoEmSegundos": 7,
+      "descricao": "Teste",
+      "projeto": {
+        "id": 3,
+        "name": "Estudando padrões de projeto"
+      },
+      "id": 4
+    }
+  ]
+}
